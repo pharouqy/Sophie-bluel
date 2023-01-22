@@ -18,6 +18,23 @@ function createFilters(tag, classes = [], content) {
 
 createFilters("button", ["filter", "active_filter"], "Tous");
 
+// Filter handeling for the gallery
+
+function handelingFilter() {
+  const filter = document.getElementsByClassName("filter");
+  Array.from(filter).forEach((filter) => {
+    filter.addEventListener("click", (e) => {
+      e.preventDefault();
+
+      const activeFilters = document.getElementsByClassName("active_filter");
+      Array.from(activeFilters).forEach((activeFilter) => {
+        activeFilter.classList.remove("active_filter");
+      });
+      filter.classList.add("active_filter");
+    });
+  });
+}
+
 // create filters for the gallery
 fetch(`${url}categories`)
   .then((response) => {
@@ -61,5 +78,6 @@ fetch(`${url}works`)
     projects.forEach((project) => {
       card(project.imageUrl, project.title, project.categoryId);
     });
+    handelingFilter();
   })
   .catch((error) => console.log(error));
