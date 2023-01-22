@@ -21,16 +21,24 @@ createFilters("button", ["filter", "active_filter"], "Tous");
 // Filter handeling for the gallery
 
 function handelingFilter() {
-  const filter = document.getElementsByClassName("filter");
-  Array.from(filter).forEach((filter) => {
+  const filters = document.getElementsByClassName("filter");
+  Array.from(filters).forEach((filter, index) => {
     filter.addEventListener("click", (e) => {
       e.preventDefault();
-
+      // Handlling active filter from the gallery
       const activeFilters = document.getElementsByClassName("active_filter");
       Array.from(activeFilters).forEach((activeFilter) => {
         activeFilter.classList.remove("active_filter");
       });
       filter.classList.add("active_filter");
+      // Apply active filter
+      const cards = Array.from(document.getElementsByClassName("card"));
+      cards.forEach((card) => {
+        card.style.display = "none";
+        if (parseInt(card.dataset.category) == index || index === 0) {
+          card.style.display = "block";
+        }
+      });
     });
   });
 }
@@ -77,7 +85,7 @@ fetch(`${url}works`)
   .then((projects) => {
     projects.forEach((project) => {
       card(project.imageUrl, project.title, project.categoryId);
+      handelingFilter();
     });
-    handelingFilter();
   })
   .catch((error) => console.log(error));
