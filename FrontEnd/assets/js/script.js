@@ -6,7 +6,7 @@ const portfolio = document.getElementById("portfolio");
 // Create filters for the gallery
 const filters = document.createElement("div");
 filters.classList.add("filters");
-portfolio.insertBefore(filters, gallery);
+portfolio.insertBefore(filters, gallery); // After portfolio insert filter before gallery
 
 // function create filters for the gallery
 function createFilters(tag, classes = [], content) {
