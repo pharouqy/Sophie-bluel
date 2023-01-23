@@ -4,6 +4,11 @@ const email = document.getElementById("email");
 const password = document.getElementById("password");
 const form = document.querySelector("form");
 
+const errorContainer = document.createElement("p");
+errorContainer.classList.add("error");
+const submitButton = document.querySelector('input[type ="submit"]');
+form.insertBefore(errorContainer, submitButton);
+
 form.addEventListener("submit", (e) => {
   e.preventDefault();
   const user = {
@@ -19,10 +24,23 @@ form.addEventListener("submit", (e) => {
   })
     .then((response) => {
       if (!response.ok) {
+        if (errorContainer == true) {
+          form.removeChild(errorContainer);
+        }
+        if (response.status === 404) {
+          errorContainer.textContent = "L'adresse email est incorrect !!!";
+        } else if (response.status === 401) {
+          errorContainer.textContent = "Le mot de passe est incorret !!!";
+        }
       } else {
-        return response;
+        return response.json();
       }
-      console.log(response);
+    })
+    .then((data) => {
+      console.log(localStorage);
+      localStorage.setItem("userId", data.userId);
+      localStorage.setItem("token", data.token);
+      document.location.href = "./index.html";
     })
     .catch((err) => {
       console.log(err);

@@ -1,5 +1,9 @@
 const url = "http://localhost:5678/api/";
 
+const localS = localStorage.userId;
+
+console.log(localS);
+
 const gallery = document.querySelector(".gallery");
 const portfolio = document.getElementById("portfolio");
 
