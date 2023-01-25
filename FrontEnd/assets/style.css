@@ -318,3 +318,25 @@ p.error {
   margin: 30px 0 0 0;
   text-align: center;
 }
+
+#portfolio > h2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#modify_projet {
+  color: rgb(0, 0, 0);
+  font-size: 14px;
+  font-family: "Work Sans";
+  margin-left: 15px;
+  font-weight: 100;
+}
+
+div#modify_title {
+  margin: 0 0 15px 0px;
+}
+
+div#modify_img {
+  margin: 10px 0px 0px 55px;
+}

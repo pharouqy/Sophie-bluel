@@ -20,8 +20,6 @@ function createFilters(tag, classes = [], content) {
   filters.appendChild(filter);
 }
 
-createFilters("button", ["filter", "active_filter"], "Tous");
-
 // Filter handeling for the gallery
 
 function handelingFilter() {
@@ -48,20 +46,26 @@ function handelingFilter() {
 }
 
 // create filters for the gallery
-fetch(`${url}categories`)
-  .then((response) => {
-    if (response.ok) {
-      return response.json();
-    }
-  })
-  .then((categories) => {
-    categories.forEach((category) => {
-      createFilters("button", ["filter"], category.name);
+const data = localStorage.getItem("token");
+
+if (!data) {
+  createFilters("button", ["filter", "active_filter"], "Tous");
+
+  fetch(`${url}categories`)
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      }
+    })
+    .then((categories) => {
+      categories.forEach((category) => {
+        createFilters("button", ["filter"], category.name);
+      });
+    })
+    .catch((error) => {
+      console.log(error);
     });
-  })
-  .catch((error) => {
-    console.log(error);
-  });
+}
 
 // Create cards
 function card(imgUrl, title, categoryId) {
