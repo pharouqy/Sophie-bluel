@@ -1,6 +1,6 @@
 // add the modify element on each div
 if (data) {
-    // create the modify element in the DOM
+  // create the modify element in the DOM
   let edit;
   function modifyEl(id) {
     edit = document.createElement("div");
@@ -24,4 +24,29 @@ if (data) {
   modifyEl("modify_projet");
   const project = document.querySelector("#portfolio > h2");
   project.appendChild(edit);
+
+  // create the banner in the DOM
+  const body = document.querySelector("body");
+  let banner;
+
+  function createBanner(id) {
+    banner = document.createElement("div");
+    const divModify = document.createElement("div");
+    const divBtn = document.createElement("div");
+    banner.setAttribute("id", id);
+    const spanModify = document.createElement("span");
+    spanModify.textContent = "Mode édition";
+    const tag = document.createElement("i");
+    tag.classList.add("fa-regular", "fa-pen-to-square");
+    divModify.appendChild(tag);
+    divModify.appendChild(spanModify);
+    const btn = document.createElement("button");
+    btn.textContent = "publier les changements";
+    divBtn.appendChild(btn);
+    banner.appendChild(divModify);
+    banner.appendChild(divBtn);
+  }
+
+  createBanner("banner");
+  body.insertBefore(banner, body.firstChild);
 }

@@ -107,6 +107,7 @@ section {
 }
 body {
   line-height: 1;
+  position: relative;
 }
 ol,
 ul {
@@ -339,4 +340,72 @@ div#modify_title {
 
 div#modify_img {
   margin: 10px 0px 0px 55px;
+}
+
+div#banner {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  position: sticky;
+  top: 0;
+  left: 0;
+  height: 50px;
+  background-color: #000000;
+}
+
+#banner > div:first-child,
+#banner > div:last-child {
+  display: flex;
+  align-items: center;
+}
+
+#banner > div:first-child {
+  color: #fff;
+  margin: 0 25px 0 0;
+}
+
+#banner > div:last-child > button {
+  border: none;
+  background-color: #fff;
+  border-radius: 20px;
+  padding: 8px 20px;
+  font-size: 0.9em;
+  font-family: "Work Sans";
+}
+
+div.galery {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  position: fixed;
+  border-radius: 10px;
+  padding: 25px;
+  top: 20%;
+  left: 40%;
+  height: 350px;
+  width: 350px;
+}
+
+div.galery > header {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+}
+
+div.galery > header > i {
+  padding: 5px;
+}
+
+div.overlay {
+  width: 100%;
+  height: 100%;
+  background-color: #0000004D;
+  z-index: 0;
+  position: fixed;
+  top: 0;
 }
