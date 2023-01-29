@@ -238,14 +238,17 @@ li:hover {
 }
 
 #contact input,
-#login input {
+#login input,
+.adding input:not(:last-child),
+.adding select {
   height: 50px;
   font-size: 1.2em;
   border: none;
   box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
 #contact label,
-#login label {
+#login label,
+.adding label {
   margin: 2em 0 1em 0;
 }
 #contact textarea {
@@ -329,6 +332,7 @@ p.error {
 #modify_projet {
   color: rgb(0, 0, 0);
   font-size: 14px;
+  cursor: pointer;
   font-family: "Work Sans";
   margin-left: 15px;
   font-weight: 100;
@@ -373,39 +377,150 @@ div#banner {
   font-family: "Work Sans";
 }
 
-div.galery {
-  display: flex;
+div.galery,
+div.adding {
+  display: none;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   background-color: #fff;
   position: fixed;
   border-radius: 10px;
   padding: 25px;
-  top: 20%;
-  left: 40%;
-  height: 350px;
-  width: 350px;
+  top: 5%;
+  left: 30%;
+  height: 85vh;
+  width: 500px;
 }
 
 div.galery > header {
   margin: 0;
   width: 100%;
-  height: 100%;
+  height: 10%;
   display: flex;
   align-items: flex-start;
   justify-content: flex-end;
 }
 
+div.adding > header > i {
+  display: inline-block;
+}
+
+div.adding > header {
+  display: flex;
+  margin: 0;
+  width: 100%;
+  height: 10%;
+}
+
 div.galery > header > i {
   padding: 5px;
+  cursor: pointer;
 }
 
 div.overlay {
   width: 100%;
   height: 100%;
-  background-color: #0000004D;
+  background-color: #0000004d;
   z-index: 0;
-  position: fixed;
+  position: unset;
   top: 0;
+  left: 0;
+}
+
+section.modal_content {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  border-bottom: 1px solid #333;
+}
+
+div.galery > h3,
+div.adding > h3 {
+  font-family: "Work Sans";
+  font-size: 26px;
+  font-weight: 400;
+  line-height: 30px;
+  letter-spacing: 0em;
+  text-align: center;
+}
+
+div.galery > div > button,
+.adding > form > input[type="submit"] {
+  background-color: #1d6154;
+  border: none;
+  color: #fff;
+  font-family: "Work Sans";
+  padding: 10px 20px;
+  border-radius: 20px;
+  text-align: center;
+  margin: 0.5em auto;
+}
+
+div.galery > div > a {
+  font-family: "Work Sans";
+  color: #d65353;
+  text-decoration: none;
+}
+
+.adding > form > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #e8f1f6;
+  padding: 5px 0;
+  width: 100%;
+  height: 190px;
+}
+
+.adding > form > div > i {
+  color: #b9c5cc;
+  font-size: 7.5em;
+}
+
+.adding > form > div > label {
+  background-color: #cbd6dc;
+  color: #306685;
+  padding: 10px 30px;
+  border-radius: 20px;
+  font-weight: 600;
+  margin: 15px 0 0 0;
+}
+
+.adding > form > div > input[type="file"] {
+  display: none;
+}
+
+.adding > form > div > p {
+  color: #444444;
+  font-size: 10px;
+  font-weight: 400;
+  margin: 5px 0 0 0;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+figure.editing-card {
+  width: 20%;
+  position: relative;
+}
+
+figure.editing-card > img {
+  width: 80%;
+}
+
+i.delete-card {
+  font-weight: 900;
+  position: absolute;
+  top: 5px;
+  right: 25px;
+  color: #fff;
+  background-color: black;
+  padding: 5px;
 }

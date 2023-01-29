@@ -50,3 +50,98 @@ if (data) {
   createBanner("banner");
   body.insertBefore(banner, body.firstChild);
 }
+
+// handeling of the modals
+
+const overlay = document.querySelector(".overlay");
+const galery = document.querySelector(".galery");
+const adding = document.querySelector(".adding");
+
+const btnAdd = document.querySelector(".add_photo");
+
+const closeX1 = document.querySelector(".galery > header > i");
+const closeX2 = document.querySelector(".adding > header > i + i");
+const back = document.querySelector(".adding > header > i");
+
+function openModal(modal) {
+  modal.style.display = "flex";
+  overlay.style.position = "fixed";
+}
+
+function closeModal(modal) {
+  modal.style.display = "none";
+  overlay.style.position = "unset";
+}
+
+const modifyProject = document.getElementById("modify_projet");
+
+modifyProject.addEventListener("click", (e) => {
+  e.preventDefault();
+  openModal(galery);
+});
+
+closeX1.addEventListener("click", (e) => {
+  e.preventDefault();
+  closeModal(galery);
+});
+
+btnAdd.addEventListener("click", (e) => {
+  e.preventDefault();
+  closeModal(galery);
+  openModal(adding);
+});
+
+closeX2.addEventListener("click", (e) => {
+  e.preventDefault();
+  closeModal(adding);
+});
+
+back.addEventListener("click", (e) => {
+  e.preventDefault();
+  closeModal(adding);
+  openModal(galery);
+});
+
+// function create cards
+
+function createCard(project) {
+  const modal = document.querySelector(".modal_content");
+
+  const figure = document.createElement("figure");
+  figure.classList.add("editing-card");
+  figure.dataset.id = project.id;
+
+  const img = document.createElement("img");
+  img.crossOrigin = "anonymous";
+  img.src = project.imageUrl;
+  img.alt = project.title;
+  figure.appendChild(img);
+
+  const desciption = document.createElement("figcaption");
+  const edit = document.createElement("p");
+  edit.innerHTML = "éditer";
+  const trash = document.createElement("i");
+  trash.classList.add("delete-card", "fa-solid", "fa-trash-can");
+  desciption.appendChild(edit);
+  desciption.appendChild(trash);
+
+  figure.appendChild(desciption);
+  modal.appendChild(figure);
+}
+
+// display card in content modal galery
+
+fetch(`${url}works`)
+  .then((response) => {
+    if (response.ok) {
+      return response.json();
+    }
+  })
+  .then((projects) => {
+    projects.forEach((project) => {
+      createCard(project);
+    });
+  })
+  .catch((error) => {
+    console.log(error);
+  });
