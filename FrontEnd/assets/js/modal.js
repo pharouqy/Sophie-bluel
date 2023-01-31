@@ -1,4 +1,3 @@
-// add the modify element on each div
 if (data) {
   // create the modify element in the DOM
   let edit;
@@ -12,6 +11,8 @@ if (data) {
     edit.appendChild(span);
     edit.insertBefore(tag, span);
   }
+
+  // add the modify element on each div
   modifyEl("modify_title");
   const article = document.querySelector("#introduction > article");
   const title = document.querySelector("article > h2");
@@ -93,11 +94,13 @@ btnAdd.addEventListener("click", (e) => {
 
 closeX2.addEventListener("click", (e) => {
   e.preventDefault();
+  clearForm();
   closeModal(adding);
 });
 
 back.addEventListener("click", (e) => {
   e.preventDefault();
+  clearForm();
   closeModal(adding);
   openModal(galery);
 });
@@ -109,7 +112,6 @@ function createCard(project) {
 
   const figure = document.createElement("figure");
   figure.classList.add("editing-card");
-  figure.dataset.id = project.id;
 
   const img = document.createElement("img");
   img.crossOrigin = "anonymous";
@@ -121,7 +123,8 @@ function createCard(project) {
   const edit = document.createElement("p");
   edit.innerHTML = "éditer";
   const trash = document.createElement("i");
-  trash.classList.add("delete-card", "fa-solid", "fa-trash-can");
+  trash.classList.add("fa-solid", "fa-trash-can", "delete-card");
+  trash.dataset.id = project.id;
   desciption.appendChild(edit);
   desciption.appendChild(trash);
 
@@ -142,6 +145,131 @@ fetch(`${url}works`)
       createCard(project);
     });
   })
+  .then(() => {
+    const cards = document.querySelectorAll("i.delete-card");
+    Array.from(cards).forEach((card) => {
+      deleteItem(card);
+    });
+    const deleteBtn = document.querySelector(".delete_all_photos");
+    deleteBtn.addEventListener("click", () => {
+      cards.forEach((card) => {
+        const datasetId = card.closest(".delete-card").dataset.id;
+        fetch(`${url}works/${datasetId}`, {
+          method: "DELETE",
+          headers: {
+            Authorization: "Bearer " + "" + localStorage.token,
+            "Content-Type": "application/json;charset=utf-8",
+          },
+        })
+          .then(() => {
+            console.log("Deleted");
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      });
+    });
+  })
   .catch((error) => {
     console.log(error);
   });
+
+// handeling delete cards
+
+function deleteItem(item) {
+  const datasetId = item.closest(".delete-card").dataset.id;
+  item.addEventListener("click", (e) => {
+    e.preventDefault();
+    fetch(`${url}works/${datasetId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: "Bearer " + "" + localStorage.token,
+        "Content-Type": "application/json;charset=utf-8",
+      },
+    })
+      .then(() => {
+        console.log("Deleted");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  });
+}
+
+// display image on upload
+
+function displayImage(input, container) {
+  input.addEventListener("change", (e) => {
+    const reader = new FileReader();
+    reader.addEventListener("load", (e) => {
+      container.style.backgroundImage = `url(${reader.result})`;
+    });
+    reader.readAsDataURL(input.files[0]);
+    const divUpload = document.querySelector(".adding > form > div > div ");
+    divUpload.style.zIndex = 999999;
+    container.style.display = "block";
+  });
+}
+
+const inputImage = document.getElementById("image_upload");
+const containerImg = document.querySelector(".display_img");
+const submitBtn = document.getElementById("modal_form_validation");
+
+displayImage(inputImage, containerImg);
+
+const form = document.querySelector(".adding form");
+
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  const data = new FormData(form);
+
+  const errorContainer = document.createElement("div");
+  errorContainer.classList.add("error");
+  form.insertBefore(errorContainer, submitBtn);
+
+  if (!data.get("title") || !data.get("title") || !data.get("image").name) {
+    errorContainer.innerHTML = "Veuillez remplir tout les champs !!!";
+  } else {
+    fetch(`${url}works`, {
+      method: "POST",
+      headers: {
+        Authorization: "Bearer " + "" + localStorage.token,
+      },
+      body: data,
+    })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+});
+
+//reset the modal adding
+
+function clearForm() {
+  form.reset();
+  containerImg.style.backgroundImage = "";
+  containerImg.style.display = "none";
+  const errorContainer = document.querySelector(".error");
+  if (errorContainer) {
+    form.removeChild(errorContainer);
+  }
+}
+
+// toggle button
+
+function toggleBtn(button) {
+  const image = document.querySelector("#modal_form_validation");
+  const title = document.querySelector("#title_input");
+  const category = document.querySelector("#category_input");
+  if (image.value != "valider" && title.value && category.value != 0) {
+    button.classList.remove("inactive_button");
+  } else {
+    button.classList.add("inactive_button");
+  }
+}
+
+form.addEventListener("input", () => toggleBtn(submitBtn));
