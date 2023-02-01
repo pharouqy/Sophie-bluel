@@ -224,26 +224,35 @@ form.addEventListener("submit", (e) => {
 
   const data = new FormData(form);
 
-  const errorContainer = document.createElement("div");
-  errorContainer.classList.add("error");
-  form.insertBefore(errorContainer, submitBtn);
+  const errorDiv = document.querySelector(".error");
 
-  if (!data.get("title") || !data.get("title") || !data.get("image").name) {
-    errorContainer.innerHTML = "Veuillez remplir tout les champs !!!";
+  if (errorDiv) {
+    form.removeChild(errorDiv);
   } else {
-    fetch(`${url}works`, {
-      method: "POST",
-      headers: {
-        Authorization: "Bearer " + "" + localStorage.token,
-      },
-      body: data,
-    })
-      .then((response) => {
-        console.log(response);
+    const errorContainer = document.createElement("div");
+    errorContainer.classList.add("error");
+    form.insertBefore(errorContainer, submitBtn);
+    if (!data.get("title") || !data.get("title") || !data.get("image").name) {
+      errorContainer.innerHTML = "Veuillez remplir tout les champs !!!";
+    } else if (
+      data.get("title") &&
+      data.get("title") &&
+      data.get("image").name
+    ) {
+      fetch(`${url}works`, {
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + "" + localStorage.token,
+        },
+        body: data,
       })
-      .catch((error) => {
-        console.log(error);
-      });
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   }
 });
 
