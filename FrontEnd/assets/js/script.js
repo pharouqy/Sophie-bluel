@@ -61,6 +61,16 @@ if (!data) {
     .catch((error) => {
       console.log(error);
     });
+} else {
+  const logout = document.querySelector(
+    "header > nav > ul > li:nth-child(3) > a"
+  );
+  logout.innerHTML = "Logout";
+  logout.addEventListener("click", (e) => {
+    e.preventDefault();
+    localStorage.clear();
+    window.location.replace("./");
+  });
 }
 
 // Create cards

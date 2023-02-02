@@ -1,3 +1,7 @@
+const overlay = document.querySelector(".overlay");
+const galery = document.querySelector(".galery");
+const adding = document.querySelector(".adding");
+
 if (data) {
   // create the modify element in the DOM
   let edit;
@@ -53,10 +57,6 @@ if (data) {
 }
 
 // handeling of the modals
-
-const overlay = document.querySelector(".overlay");
-const galery = document.querySelector(".galery");
-const adding = document.querySelector(".adding");
 
 const btnAdd = document.querySelector(".add_photo");
 
@@ -150,6 +150,7 @@ fetch(`${url}works`)
     Array.from(cards).forEach((card) => {
       deleteItem(card);
     });
+    openModal(galery);
     const deleteBtn = document.querySelector(".delete_all_photos");
     deleteBtn.addEventListener("click", () => {
       cards.forEach((card) => {
