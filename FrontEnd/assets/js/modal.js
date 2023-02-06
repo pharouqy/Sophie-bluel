@@ -150,10 +150,12 @@ fetch(`${url}works`)
     Array.from(cards).forEach((card) => {
       deleteItem(card);
     });
-    openModal(galery);
+  })
+  .then(() => {
+    const cards = document.querySelectorAll("i.delete-card");
     const deleteBtn = document.querySelector(".delete_all_photos");
     deleteBtn.addEventListener("click", () => {
-      cards.forEach((card) => {
+      Array.from(cards).forEach((card) => {
         const datasetId = card.closest(".delete-card").dataset.id;
         fetch(`${url}works/${datasetId}`, {
           method: "DELETE",
@@ -190,6 +192,7 @@ function deleteItem(item) {
     })
       .then(() => {
         console.log("Deleted");
+        openModal(galery);
       })
       .catch((err) => {
         console.log(err);
